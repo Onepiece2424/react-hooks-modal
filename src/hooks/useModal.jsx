@@ -1,6 +1,7 @@
 const useModal = () => {
-  const Modal = () => {
-    return <h2>Modal</h2>;
+  const Modal = ({ children }) => {
+    console.log(children)
+    return <>{children}</>;
   };
 
   return { Modal };
