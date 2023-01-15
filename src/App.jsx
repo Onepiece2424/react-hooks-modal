@@ -4,7 +4,7 @@ import useModal from './hooks/useModal';
 
 function App() {
 
-  const { Modal, openModal, closeModal } = useModal();
+  const { Modal, openModal, closeModal, show } = useModal();
 
   return (
     <div className="App">
@@ -12,7 +12,7 @@ function App() {
       <div>
         <button onClick={openModal}>Open</button>
       </div>
-      <Modal>
+      <Modal show={show}>
         <div
           style={{
             backgroundColor: 'white',
@@ -26,7 +26,9 @@ function App() {
           <button onClick={closeModal}>Close</button>
         </div>
       </Modal>
-      <div>メインコンテンツ</div>
+      <div style={{ height: '2000px', backgroundColor: '#ddd' }}>
+        メインコンテンツ
+      </div>
       {/* <WelcomeDialog /> */}
     </div>
   );

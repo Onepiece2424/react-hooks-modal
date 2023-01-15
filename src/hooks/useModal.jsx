@@ -1,22 +1,52 @@
 // カスタムフック
-import { useState } from  'react';
+import { useState, useEffect, useRef } from  'react';
 import { createPortal } from 'react-dom';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 
 const useModal = () => {
 
   // モーダルを表示・非表示にするためのstate
   const [show, setShow] = useState(false);
 
+  // モーダルを開く
   const openModal = () => {
     setShow(true);
   };
 
+  // モーダルを閉じる
   const closeModal = () => {
     setShow(false);
   };
 
-  const Modal = ({ children }) => {
+  const Modal = ({ children, show }) => {
+
+    // モーダルのDOMを取得
+    const contentRef = useRef(null);
+
+    // モーダル表示時に背景のスクロールを制御
+    useEffect(() => {
+      if (contentRef.current === null) return;
+
+      if (show) {
+        disableBodyScroll(contentRef.current, {
+          reserveScrollBarGap: true,
+        });
+      } else {
+        enableBodyScroll(contentRef.current);
+      }
+
+      return () => {
+        clearAllBodyScrollLocks();
+      };
+    }, [show, contentRef])
+
+    // デフォルト時にはモーダルを非表示にする
     if (!show) return null;
+
     return createPortal(
       <div
       style={{
@@ -41,13 +71,13 @@ const useModal = () => {
           opacity: '0.5',
         }}
       ></div>
-      <div style={{ position: 'relative' }}>{children}</div>
+      <div style={{ position: 'relative' }} ref={contentRef}>{children}</div>
     </div>,
     document.getElementById('root')
     );
   };
 
-  return { Modal, openModal, closeModal };
+  return { Modal, openModal, closeModal, show };
 };
 
 export default useModal;
