@@ -26,6 +26,7 @@ function App() {
           <button onClick={closeModal}>Close</button>
         </div>
       </Modal>
+      <div>メインコンテンツ</div>
       {/* <WelcomeDialog /> */}
     </div>
   );

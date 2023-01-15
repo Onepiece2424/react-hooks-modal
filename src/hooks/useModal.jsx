@@ -1,5 +1,6 @@
 // カスタムフック
 import { useState } from  'react';
+import { createPortal } from 'react-dom';
 
 const useModal = () => {
 
@@ -16,7 +17,7 @@ const useModal = () => {
 
   const Modal = ({ children }) => {
     if (!show) return null;
-    return (
+    return createPortal(
       <div
       style={{
         position: 'fixed',
@@ -41,7 +42,8 @@ const useModal = () => {
         }}
       ></div>
       <div style={{ position: 'relative' }}>{children}</div>
-    </div>
+    </div>,
+    document.getElementById('root')
     );
   };
 
