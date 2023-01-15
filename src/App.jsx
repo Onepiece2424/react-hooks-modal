@@ -13,8 +13,18 @@ function App() {
         <button onClick={openModal}>Open</button>
       </div>
       <Modal>
-        <h2>Content from children</h2>
-        <button onClick={closeModal}>Close</button>
+        <div
+          style={{
+            backgroundColor: 'white',
+            width: '300px',
+            height: '200px',
+            padding: '1em',
+            borderRadius: '15px',
+          }}
+        >
+          <h2>Content from Children</h2>
+          <button onClick={closeModal}>Close</button>
+        </div>
       </Modal>
       {/* <WelcomeDialog /> */}
     </div>
